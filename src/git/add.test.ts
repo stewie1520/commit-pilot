@@ -25,7 +25,7 @@ Deno.test({
       try {
         await Deno.remove(testFileName);
         execSync("git reset");
-      } catch (e) {
+      } catch (_e) {
         // Ignore cleanup errors
       }
     }
@@ -49,7 +49,7 @@ Deno.test({
       // Restore .git directory
       try {
         await Deno.rename(".git-temp", ".git");
-      } catch (e) {
+      } catch (_e) {
         // Ignore cleanup errors
       }
     }

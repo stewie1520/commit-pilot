@@ -9,11 +9,11 @@ import { gitDiff } from "./git/diff.ts";
 import { gitGetCurrentBranch } from "./git/get-current-branch.ts";
 
 async function main(): Promise<void> {
-  const diff = await gitDiff()
-  await createBranchIfInDefault(diff)  
-  
   console.log('🛠️  Adding changes...');
   await gitAdd()
+
+  const diff = await gitDiff()
+  await createBranchIfInDefault(diff)  
 
   console.log('🤖 Generating commit message...');
   let { commitMessage } = await generateCommitMessage({ diff });
