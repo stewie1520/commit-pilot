@@ -6,7 +6,7 @@ import { exec } from 'node:child_process';
  */
 export const gitCommit = (message: string): Promise<string> => {
   return new Promise((resolve, reject) => {
-    exec(`git commit -m "${message}"`, (error, stdout, stderr) => {
+    exec(`git commit -m "${message}"`, (error, _, stderr) => {
       if (error) {
         return reject(stderr || error.message);
       }
