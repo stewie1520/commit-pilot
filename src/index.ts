@@ -1,5 +1,6 @@
 import { generateBranchName } from "./ai/flows/generate-branch-name.ts";
 import { generateCommitMessage } from "./ai/flows/generate-commit-message.ts";
+import { improveCommitMessage } from './ai/flows/improve-commit-message.ts';
 import { DEFAULT_BRANCHES } from "./const.ts";
 import { gitAdd } from "./git/add.ts";
 import { gitCommit } from "./git/commit.ts";
@@ -15,10 +16,11 @@ async function main(): Promise<void> {
   await gitAdd()
 
   console.log('🤖 Generating commit message...');
-  const commitMessage = await generateCommitMessage({ diff });
+  let { commitMessage } = await generateCommitMessage({ diff });
+  commitMessage = (await improveCommitMessage({ diff, commitMessage })).improvedCommitMessage;
 
-  await gitCommit(commitMessage.commitMessage);
-  console.log(`😉 Committing changes with message: "${commitMessage.commitMessage}"`);
+  await gitCommit(commitMessage);
+  console.log(`😉 Committing changes with message: "${commitMessage}"`);
 }
 
 main().catch(error => {
