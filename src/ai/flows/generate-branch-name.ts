@@ -11,7 +11,7 @@ const GenerateBranchNameOutputSchema = z.object({
 });
 export type GenerateBranchNameOutput = z.infer<typeof GenerateBranchNameOutputSchema>;
 
-export async function generateBranchName(
+export function generateBranchName(
   input: GenerateBranchNameInput
 ): Promise<GenerateBranchNameOutput> {
   return generateBranchNameFlow(input);
@@ -40,7 +40,7 @@ const generateBranchNameFlow = (await getAI()).defineFlow<
   inputSchema: GenerateBranchNameInputSchema,
   outputSchema: GenerateBranchNameOutputSchema,
 },
-async input => {
+async (input: GenerateBranchNameInput) => {
   const {output} = await prompt(input);
 
   if (!output) {

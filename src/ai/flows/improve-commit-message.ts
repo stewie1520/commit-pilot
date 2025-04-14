@@ -12,7 +12,7 @@ const ImproveCommitMessageOutputSchema = z.object({
 });
 export type ImproveCommitMessageOutput = z.infer<typeof ImproveCommitMessageOutputSchema>;
 
-export async function improveCommitMessage(
+export function improveCommitMessage(
   input: ImproveCommitMessageInput
 ): Promise<ImproveCommitMessageOutput> {
   return improveCommitMessageFlow(input);
@@ -42,7 +42,7 @@ const improveCommitMessageFlow = (await getAI()).defineFlow<
   inputSchema: ImproveCommitMessageInputSchema,
   outputSchema: ImproveCommitMessageOutputSchema,
 },
-async input => {
+async (input: ImproveCommitMessageInput) => {
   const {output} = await prompt(input);
 
   if (!output) {

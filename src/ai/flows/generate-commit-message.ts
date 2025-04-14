@@ -13,7 +13,7 @@ const GenerateCommitMessageOutputSchema = z.object({
 
 export type GenerateCommitMessageOutput = z.infer<typeof GenerateCommitMessageOutputSchema>;
 
-export async function generateCommitMessage(input: GenerateCommitMessageInput): Promise<GenerateCommitMessageOutput> {
+export function generateCommitMessage(input: GenerateCommitMessageInput): Promise<GenerateCommitMessageOutput> {
   return generateCommitMessageFlow(input);
 }
 
@@ -24,7 +24,7 @@ const generateCommitMessageFlow = (await getAI()).defineFlow<
   name: 'generateCommitMessageFlow',
   inputSchema: GenerateCommitMessageInputSchema,
   outputSchema: GenerateCommitMessageOutputSchema,
-}, async input => {
+}, async (input: GenerateCommitMessageInput) => {
   const { output } = await generateCommitMessagePrompt(input)
   if (!output) {
     throw new Error('Failed to generate commit message')
