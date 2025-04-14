@@ -1,26 +1,21 @@
 # Commit Pilot
 
-[![Deno](https://github.com/hieudong/commit-pilot/actions/workflows/deno.yml/badge.svg)](https://github.com/hieudong/commit-pilot/actions/workflows/deno.yml)
+[![Deno](https://github.com/stewie1520/commit-pilot/actions/workflows/deno.yml/badge.svg)](https://github.com/stewie1520/commit-pilot/actions/workflows/deno.yml)
 
 A TypeScript project with testing and CI integration.
 
 ## Setup
 
 ```bash
-npm install
+deno install
+
+deno run build
+
+# add cpx to your PATH
+export PATH=$PATH:$(pwd)/bin
 ```
 
 ## Available Scripts
 
-- `npm run build` - Build the project
-- `npm run dev` - Run the project in development mode
-- `npm start` - Run the built project
-- `npm test` - Run tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run lint` - Run ESLint
+- `cpx` - Add files, generate commit message, and commit changes
 
-## Project Structure
-
-- `src/` - Source files
-- `dist/` - Compiled JavaScript files
-- `.github/workflows/` - GitHub Actions CI configuration
