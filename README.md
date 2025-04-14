@@ -1,5 +1,7 @@
 # Commit Pilot
 
+[![Deno](https://github.com/hieudong/commit-pilot/actions/workflows/deno.yml/badge.svg)](https://github.com/hieudong/commit-pilot/actions/workflows/deno.yml)
+
 A TypeScript project with testing and CI integration.
 
 ## Setup
