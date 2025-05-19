@@ -7,17 +7,31 @@ import { gitCommit } from "./git/commit.ts";
 import { gitCreateNewBranch } from "./git/create-new-branch.ts";
 import { gitDiff } from "./git/diff.ts";
 import { gitGetCurrentBranch } from "./git/get-current-branch.ts";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 
 async function main(): Promise<void> {
-  console.log('🛠️  Adding changes...');
-  await gitAdd()
+  const args = parseArgs(Deno.args, {
+    alias: {
+      'only-staged': 's',
+    },
+    default: {
+      'only-staged': false,
+    }
+  });
 
-  const diff = await gitDiff()
-  await createBranchIfInDefault(diff)  
+  const onlyStaged = args['only-staged'] as boolean;
+
+  if (!onlyStaged) {
+    console.log('🛠️  Adding changes...');
+    await gitAdd()
+  }
+
+  const diffStaged = await gitDiff(true)
+  await createBranchIfInDefault(diffStaged)  
 
   console.log('🤖 Generating commit message...');
-  let { commitMessage } = await generateCommitMessage({ diff });
-  commitMessage = (await improveCommitMessage({ diff, commitMessage })).improvedCommitMessage;
+  let { commitMessage } = await generateCommitMessage({ diff: diffStaged });
+  commitMessage = (await improveCommitMessage({ diff: diffStaged, commitMessage })).improvedCommitMessage;
 
   await gitCommit(commitMessage);
   console.log(`😉 Committing changes with message: "${commitMessage}"`);
