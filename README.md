@@ -4,6 +4,8 @@
 
 Commit Pilot (`cpx`) is an AI-powered CLI tool that automates the Git commit workflow. It automatically adds changes, generates meaningful commit messages based on your code changes, and follows commit lint rules.
 
+![demo](https://github.com/stewie1520/commit-pilot/blob/main/assets/demo.gif)
+
 ## Features
 
 - 🤖 **AI-Powered Commit Messages** - Generates contextual commit messages based on your code changes
