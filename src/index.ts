@@ -8,6 +8,7 @@ import { gitCreateNewBranch } from "./git/create-new-branch.ts";
 import { gitDiff } from "./git/diff.ts";
 import { gitGetCurrentBranch } from "./git/get-current-branch.ts";
 import { parseArgs } from "jsr:@std/cli/parse-args";
+import { checkCommitLint } from './utils/check-commit-lint.ts';
 
 async function main(): Promise<void> {
   const args = parseArgs(Deno.args, {
@@ -30,11 +31,12 @@ async function main(): Promise<void> {
   await createBranchIfInDefault(diffStaged)  
 
   console.log('🤖 Generating commit message...');
-  let { commitMessage } = await generateCommitMessage({ diff: diffStaged });
-  commitMessage = (await improveCommitMessage({ diff: diffStaged, commitMessage })).improvedCommitMessage;
+  const commitLint = checkCommitLint();
+  let { commitMessage } = await generateCommitMessage({ diff: diffStaged, commitLint });
+  commitMessage = (await improveCommitMessage({ diff: diffStaged, commitLint, commitMessage })).improvedCommitMessage;
 
-  await gitCommit(commitMessage);
   console.log(`😉 Committing changes with message: "${commitMessage}"`);
+  await gitCommit(commitMessage);
 }
 
 main().catch(error => {

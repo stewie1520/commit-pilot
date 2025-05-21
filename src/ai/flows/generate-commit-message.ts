@@ -3,6 +3,7 @@ import { getAI } from "../ai-instance.ts";
 
 const GenerateCommitMessageInputSchema = z.object({
   diff: z.string().describe('The diff of the staged changes.'),
+  commitLint: z.string().optional().describe('The commit lint config.'),
 });
 
 export type GenerateCommitMessageInput = z.infer<typeof GenerateCommitMessageInputSchema>;
@@ -43,6 +44,11 @@ const generateCommitMessagePrompt = (await getAI()).definePrompt({
   },
   prompt: `  
   You are an expert in crafting commit messages. Analyze the following diff of staged changes and generate a concise and informative commit message.
+
+  If there is a commit lint config, please follow it.
+
+  Commit lint config:
+  {{commitLint}}
 
   Diff:
   {{diff}}
