@@ -14,11 +14,26 @@ async function main(): Promise<void> {
   const args = parseArgs(Deno.args, {
     alias: {
       'only-staged': 's',
+      'help': 'h',
     },
     default: {
       'only-staged': false,
+      'help': false,
     }
   });
+
+  if (args['help']) {
+    console.log(`
+      Usage: cpx [options]
+      A tool to generate commit messages and manage branches based on changes.
+
+      Options:
+        --only-staged, -s   Only commit staged changes (default: false)
+        --help, -h          Show this help message
+    `);
+    Deno.exit(0);
+    return;
+  }
 
   const onlyStaged = args['only-staged'] as boolean;
 
